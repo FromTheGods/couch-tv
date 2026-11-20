@@ -25,6 +25,9 @@ say which TVs and which app.
 3. The first TV pauses. The other TV wakes, opens the app from a fresh start, picks your profile and
    plays. Allow 15 to 50 seconds, depending on the app.
 
+After the move the phone remote drives the other TV, so you do not have to change **Which TV** when you
+get there. A move that was refused or failed leaves the phone on the TV it had.
+
 If the other TV is playing something itself, nothing happens there and the phone asks first.
 
 ## What the bridge does

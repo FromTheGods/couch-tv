@@ -271,10 +271,12 @@ export default function App() {
     .catch(() => say(t('still_cant_reach'), 'err'));
   const onPower = () => (tv?.power === 'on' ? run(api.power('off')) : onWake());
   // Move what is playing on this TV to another one. A TV that is playing something itself is only
-  // taken over after a yes.
+  // taken over after a yes. Once the bridge has opened the show there, this phone follows it: the
+  // person is walking to that room, and whatever is left to do (press Play, pick a profile) is there.
+  // A move that was refused or failed leaves the phone on the TV it had.
   const onMove = async (to, force = false) => {
     setSheet(null); say(t('moving_to', { tv: to.name }));
-    try { const r = await api.move(to.id, force); say(tBridge(r.note_key, r.note_vars, r.note)); } catch (e) {
+    try { const r = await api.move(to.id, force); chooseTv(to.id); say(tBridge(r.note_key, r.note_vars, r.note)); } catch (e) {
       if (e.key === 'err_move_tv_in_use' && !force && window.confirm(t('move_take_over', { tv: to.name }))) { onMove(to, true); return; }
       if (e.status === 0) setReach(false);
       say(tBridge(e.key, e.vars, e.message), 'err');
